@@ -19,7 +19,8 @@ class ArticleSchema(Schema):
     title = fields.String(validate=validate.Length(max=255))
     content = fields.String()
     author = fields.Method(
-        required=False, serialize="get_author", deserialize="load_author", allow_none=True
+        required=False, serialize="get_author", deserialize="load_author", allow_none=True,
+        # load_default=None
     )
     regions = fields.Method(
         required=False, serialize="get_regions", deserialize="load_regions"
@@ -36,6 +37,9 @@ class ArticleSchema(Schema):
 
     def get_author(self, article):
         from techtest.author.schemas import AuthorSchema
+        author = article.author
+        if not author:
+            return None
         return AuthorSchema().dump(article.author)
 
     def load_author(self, author):

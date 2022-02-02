@@ -65,6 +65,31 @@ class AuthorListViewTestCase(TestCase):
             payload
         )
 
+    def test_creates_new_author_new(self):
+        """Should fail — we don't create the new author when the ID is specidifed"""
+        payload = {
+            "id": self.author_2.id,
+            "first_name": "Test FN",
+            "last_name": "Test LN",
+        }
+        response = self.client.post(
+            self.url, data=json.dumps(payload), content_type="application/json"
+        )
+        author = Author.objects.last()
+        self.assertEqual(response.status_code, 201)
+        self.assertIsNotNone(author)
+        
+        jresp = response.json()
+        payload["id"] = author.pk
+        self.assertNotEqual(
+            jresp,
+            {
+                "id": self.author_2.id,
+                "first_name": "Test FN",
+                "last_name": "Test LN",
+            }
+        )
+
 
 class AuthorViewTestCase(TestCase):
     def setUp(self):

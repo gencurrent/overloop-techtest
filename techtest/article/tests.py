@@ -38,7 +38,7 @@ class ArticleListViewTestCase(TestCase):
                     "id": self.article_1.id,
                     "title": "Fake Article 1",
                     "content": "",
-                    "author": {},
+                    "author": None,
                     "regions": [],
                 },
                 {
@@ -88,7 +88,7 @@ class ArticleListViewTestCase(TestCase):
                 "id": article.id,
                 "title": "Fake Article 3",
                 "content": "To be or not to be",
-                "author": {},
+                "author": None,
                 "regions": [
                     {
                         "id": regions.all()[0].id,
@@ -278,8 +278,8 @@ class ArticleViewTestCase(TestCase):
                 "id": article.id,
                 "title": "Fake Article 1 (Modified)",
                 "content": "To be or not to be here",
-                "author": {
-                },
+                # "author": {},
+                "author": None,
                 "regions": [],
             },
             jresp,
